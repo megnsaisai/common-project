@@ -1,7 +1,7 @@
 package cn.mx.security.config;
 
 import cn.mx.constants.Constants;
-import cn.mx.db.entity.user.LoginUser;
+import cn.mx.db.entity.SysUser.LoginUser;
 import cn.mx.error.ServiceException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +13,7 @@ public class SecurityUtils {
      **/
     public static Long getUserId() {
         try {
-            return getLoginUser().getUser().getId();
+            return getLoginUser().getSysUser().getId();
         } catch (Exception e) {
             throw new ServiceException("获取用户ID异常", Constants.HttpStatus.UNAUTHORIZED);
         }
@@ -24,7 +24,7 @@ public class SecurityUtils {
      **/
     public static Long getDeptId() {
         try {
-            return getLoginUser().getUser().getDeptId();
+            return getLoginUser().getSysUser().getDeptId();
         } catch (Exception e) {
             throw new ServiceException("获取部门ID异常", Constants.HttpStatus.UNAUTHORIZED);
         }

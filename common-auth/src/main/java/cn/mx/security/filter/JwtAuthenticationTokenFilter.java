@@ -1,7 +1,7 @@
 package cn.mx.security.filter;
 
 import cn.mx.constants.Constants;
-import cn.mx.db.entity.user.LoginUser;
+import cn.mx.db.entity.SysUser.LoginUser;
 import cn.mx.redis.RedisCache;
 import cn.mx.security.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -48,7 +48,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             throw new RuntimeException("token非法");
         }
         //从redis中获取用户信息
-        String redisKey = Constants.Redis.LOGIN_USER_ID + userid;
+        String redisKey = Constants.Redis.LOGIN_USER_ID + token;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
         if(Objects.isNull(loginUser)){
             throw new RuntimeException("用户未登录");

@@ -1,4 +1,4 @@
-package cn.mx.db.entity.role;
+package cn.mx.db.entity.sysrole;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;

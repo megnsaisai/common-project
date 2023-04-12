@@ -2,7 +2,7 @@ package cn.mx.security.page;
 
 import cn.mx.constants.Constants;
 import cn.mx.db.entity.response.ResponseResult;
-import cn.mx.db.entity.user.LoginUser;
+import cn.mx.db.entity.SysUser.LoginUser;
 import cn.mx.security.config.SecurityUtils;
 import cn.mx.utils.DateUtils;
 import cn.mx.utils.bean.StringUtils;

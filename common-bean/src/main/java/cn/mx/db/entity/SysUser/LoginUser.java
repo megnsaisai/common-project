@@ -1,4 +1,4 @@
-package cn.mx.db.entity.user;
+package cn.mx.db.entity.SysUser;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
@@ -38,7 +38,7 @@ public class LoginUser implements UserDetails {
 
 
 
-    private User user;
+    private SysUser sysUser;
 
     //存储权限信息
 //    private List<String> permissions;
@@ -48,8 +48,8 @@ public class LoginUser implements UserDetails {
      */
     private Set<String> permissions;
 
-    public LoginUser(User user,Set<String>  permissions, String loginTime, Long userId) {
-        this.user = user;
+    public LoginUser(SysUser sysUser, Set<String>  permissions, String loginTime, Long userId) {
+        this.sysUser = sysUser;
         this.permissions = permissions;
         this.loginTime = loginTime;
         this.userId = userId;
@@ -73,12 +73,12 @@ public class LoginUser implements UserDetails {
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return sysUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return sysUser.getUserName();
     }
 
     @Override

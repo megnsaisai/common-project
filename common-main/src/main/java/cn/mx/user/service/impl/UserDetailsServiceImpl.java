@@ -1,9 +1,9 @@
 package cn.mx.user.service.impl;
 
-import cn.mx.db.entity.user.LoginUser;
-import cn.mx.db.entity.user.User;
-import cn.mx.mapper.menu.MenuMapper;
-import cn.mx.mapper.user.UserMapper;
+import cn.mx.db.entity.SysUser.LoginUser;
+import cn.mx.db.entity.SysUser.SysUser;
+import cn.mx.mapper.sysmenu.SysMenuMapper;
+import cn.mx.mapper.sysuser.SysUserMapper;
 
 import cn.mx.utils.DateUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -17,26 +17,26 @@ import java.util.Objects;
 import java.util.Set;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService{
 
     /**
      * 用户
      */
-    private UserMapper userMapper;
+    private SysUserMapper sysUserMapper;
 
     @Autowired
-    public void setUserMapper(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public void setUserMapper(SysUserMapper sysUserMapper) {
+        this.sysUserMapper = sysUserMapper;
     }
 
     /**
      * 菜单
      */
-    private MenuMapper menuMapper;
+    private SysMenuMapper sysMenuMapper;
 
     @Autowired
-    public void setMenuMapper(MenuMapper menuMapper) {
-        this.menuMapper = menuMapper;
+    public void setMenuMapper(SysMenuMapper sysMenuMapper) {
+        this.sysMenuMapper = sysMenuMapper;
     }
 
 
@@ -44,15 +44,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         //根据用户名查询用户信息
-        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getUserName,username);
-        User user = userMapper.selectOne(wrapper);
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(SysUser::getUserName,username);
+        SysUser sysUser = sysUserMapper.selectOne(wrapper);
         //如果查询不到数据就通过抛出异常来给出提示
-        if(Objects.isNull(user)){
-            throw new RuntimeException("用户名或密码错误");
+        if(Objects.isNull(sysUser)){
+            throw new UsernameNotFoundException("账号不存在");
         }
-        Set<String> permissionKeyList =  menuMapper.selectPermsByUserId(user.getId());
+        Set<String> permissionKeyList =  sysMenuMapper.selectPermsByUserId(sysUser.getId());
         //封装成UserDetails对象返回
-        return new LoginUser(user, permissionKeyList, DateUtils.getTime(), user.getId());
+        return new LoginUser(sysUser, permissionKeyList, DateUtils.getTime(), sysUser.getId());
     }
 }

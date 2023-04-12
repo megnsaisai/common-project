@@ -1,7 +1,7 @@
 package cn.mx.security.service;
 
-import cn.mx.db.entity.role.SysRole;
-import cn.mx.db.entity.user.LoginUser;
+import cn.mx.db.entity.sysrole.SysRole;
+import cn.mx.db.entity.SysUser.LoginUser;
 import cn.mx.security.config.SecurityUtils;
 import cn.mx.utils.bean.StringUtils;
 import org.springframework.stereotype.Service;
@@ -93,11 +93,11 @@ public class PermissionService {
             return false;
         }
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getUser().getRoles()))
+        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getSysUser().getRoles()))
         {
             return false;
         }
-        for (SysRole sysRole : loginUser.getUser().getRoles())
+        for (SysRole sysRole : loginUser.getSysUser().getRoles())
         {
             String roleKey = sysRole.getRoleKey();
             if (SUPER_ADMIN.equals(roleKey) || roleKey.equals(StringUtils.trim(role)))
@@ -132,7 +132,7 @@ public class PermissionService {
             return false;
         }
         LoginUser loginUser = SecurityUtils.getLoginUser();
-        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getUser().getRoles()))
+        if (StringUtils.isNull(loginUser) || CollectionUtils.isEmpty(loginUser.getSysUser().getRoles()))
         {
             return false;
         }

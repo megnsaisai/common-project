@@ -1,27 +1,16 @@
-package cn.mx.db.entity.menu;
+package cn.mx.db.entity.sysmenu.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
+
+import cn.mx.utils.tree.DataTree;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-@TableName(value="sys_menu")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class Menu implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
+public class SysMenuDTO implements DataTree<SysMenuDTO>, Serializable {
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
     /**
      * 菜单名
@@ -43,16 +32,16 @@ public class Menu implements Serializable {
      * 菜单状态（0正常 1停用）
      */
     private String status;
+    /**
+     * 权限标识
+     */
+    private String perms;
 
     /**
      * 父级编号
      */
     private Long parentId;
 
-    /**
-     * 权限标识
-     */
-    private String perms;
     /**
      * 菜单图标
      */
@@ -73,4 +62,6 @@ public class Menu implements Serializable {
      * 备注
      */
     private String remark;
+
+    private List<SysMenuDTO> children;
 }

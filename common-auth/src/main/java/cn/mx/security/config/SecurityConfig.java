@@ -36,11 +36,11 @@ public class SecurityConfig{
     /**
      * 处理认证失败、鉴权失败
      */
-    private AuthenticationEntryPoint authenticationEntryPoint;
+    private CustomAuthenticationProvider customAuthenticationProvider;
 
     @Autowired
-    public void setAuthenticationEntryPoint(AuthenticationEntryPoint authenticationEntryPoint) {
-        this.authenticationEntryPoint = authenticationEntryPoint;
+    public void setAuthenticationEntryPoint(CustomAuthenticationProvider customAuthenticationProvider) {
+        this.customAuthenticationProvider = customAuthenticationProvider;
     }
 
     /**
@@ -53,13 +53,13 @@ public class SecurityConfig{
         this.accessDeniedHandler = accessDeniedHandler;
     }
 
-
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Autowired
-    public void setAuthenticationSuccessHandler(AuthenticationSuccessHandler authenticationSuccessHandler) {
-        this.authenticationSuccessHandler = authenticationSuccessHandler;
-    }
+//
+//    private AuthenticationSuccessHandler authenticationSuccessHandler;
+//
+//    @Autowired
+//    public void setAuthenticationSuccessHandler(AuthenticationSuccessHandler authenticationSuccessHandler) {
+//        this.authenticationSuccessHandler = authenticationSuccessHandler;
+//    }
 
 
     private AuthenticationFailureHandler authenticationFailureHandler;
@@ -69,12 +69,11 @@ public class SecurityConfig{
         this.authenticationFailureHandler = authenticationFailureHandler;
     }
 
-
-    private LogoutSuccessHandler logoutSuccessHandler;
+    private SGLogoutSuccessHandler sgLogoutSuccessHandler;
 
     @Autowired
-    public void setLogoutSuccessHandler(LogoutSuccessHandler logoutSuccessHandler) {
-        this.logoutSuccessHandler = logoutSuccessHandler;
+    public void setLogoutSuccessHandler(SGLogoutSuccessHandler sgLogoutSuccessHandler) {
+        this.sgLogoutSuccessHandler = sgLogoutSuccessHandler;
     }
 
     /**

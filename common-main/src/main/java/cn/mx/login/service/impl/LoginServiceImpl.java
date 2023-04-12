@@ -2,17 +2,17 @@ package cn.mx.login.service.impl;
 
 import cn.mx.constants.Constants;
 import cn.mx.db.entity.response.ResponseResult;
-import cn.mx.db.entity.user.LoginUser;
-import cn.mx.db.entity.user.User;
+import cn.mx.db.entity.SysUser.LoginUser;
+import cn.mx.db.entity.SysUser.SysUser;
 import cn.mx.login.service.LoginService;
 
 import cn.mx.redis.RedisCache;
 import cn.mx.security.JwtUtil;
+import cn.mx.security.config.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -40,13 +40,13 @@ public class LoginServiceImpl implements LoginService {
     /**
      * 登录
      *
-     * @param user
+     * @param sysUser
      * @return
      */
     @Override
-    public ResponseResult login(User user) {
+    public ResponseResult login(SysUser sysUser) {
         //AuthenticationManager authenticate进行用户认证
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(sysUser.getUserName(), sysUser.getPassword()));
 
         //如果认证没通过，给出对应的提示
         if(Objects.isNull(authentication)){
@@ -54,10 +54,10 @@ public class LoginServiceImpl implements LoginService {
         }
         //如果认证通过了，使用userid生成一个jwt jwt存入ResponseResult返回
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        String userId = loginUser.getUser().getId().toString();
+        String userId = loginUser.getSysUser().getId().toString();
         //authenticate存入redis
         String jwt = JwtUtil.createJWT(userId);
-        redisCache.setCacheObject(Constants.Redis.LOGIN_USER_ID + userId,loginUser);
+        redisCache.setCacheObject(Constants.Redis.LOGIN_USER_ID + jwt,loginUser);
         //把token响应给前端
         HashMap<String,String> map = new HashMap<>();
         map.put("token",jwt);
@@ -72,10 +72,9 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public ResponseResult logout() {
         //获取SecurityContextHolder中的用户id
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Long userid = loginUser.getUser().getId();
-        redisCache.deleteObject(Constants.Redis.LOGIN_USER_ID + userid);
+        LoginUser loginUser = SecurityUtils.getLoginUser();
+        Long userid = loginUser.getSysUser().getId();
+        redisCache.deleteObject(Constants.Redis.LOGIN_USER_ID + loginUser.getToken());
         return new ResponseResult(200L,"退出成功");
     }
 }

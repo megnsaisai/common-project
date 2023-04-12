@@ -1,6 +1,6 @@
 package cn.mx.menu.service;
 
-import cn.mx.db.entity.menu.dto.MenuDTO;
+import cn.mx.db.entity.sysmenu.dto.SysMenuDTO;
 
 import java.util.List;
 
@@ -10,5 +10,5 @@ public interface MenuService {
      * 查询菜单集合
      * @return
      */
-    List<MenuDTO> findMenuList();
+    List<SysMenuDTO> findMenuList();
 }

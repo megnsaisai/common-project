@@ -2,7 +2,7 @@ package cn.mx.login.controller;
 
 
 import cn.mx.db.entity.response.ResponseResult;
-import cn.mx.db.entity.user.User;
+import cn.mx.db.entity.SysUser.SysUser;
 import cn.mx.login.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +23,8 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public ResponseResult login(@RequestBody User user){
-        return loginService.login(user);
+    public ResponseResult login(@RequestBody SysUser sysUser){
+        return loginService.login(sysUser);
     }
 
 

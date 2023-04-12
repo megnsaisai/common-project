@@ -2,7 +2,7 @@ package cn.mx.menu.controller;
 
 
 
-import cn.mx.db.entity.menu.dto.MenuDTO;
+import cn.mx.db.entity.sysmenu.dto.SysMenuDTO;
 import cn.mx.db.entity.response.ResponseResult;
 import cn.mx.menu.service.MenuService;
 import cn.mx.security.page.BaseController;
@@ -34,7 +34,7 @@ public class MenuController extends BaseController {
      */
     @RequestMapping("list")
     public ResponseResult findMenuList(){
-        List<MenuDTO> menuList = menuService.findMenuList();
+        List<SysMenuDTO> menuList = menuService.findMenuList();
         if (CollectionUtils.isEmpty(menuList)) {
             return ResponseResult.error(HTTPConstantsEnum.ERROR.getCode(), HTTPConstantsEnum.ERROR.getEnglishDesc());
         }

@@ -1,6 +1,6 @@
-package cn.mx.mapper.user;
+package cn.mx.mapper.sysuser;
 
-import cn.mx.db.entity.user.User;
+import cn.mx.db.entity.SysUser.SysUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Repository;
 
 @Mapper
 @Repository
-public interface UserMapper extends BaseMapper<User> {
+public interface SysUserMapper extends BaseMapper<SysUser> {
 }

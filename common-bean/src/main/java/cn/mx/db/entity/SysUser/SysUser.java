@@ -1,6 +1,6 @@
-package cn.mx.db.entity.user;
+package cn.mx.db.entity.SysUser;
 
-import cn.mx.db.entity.role.SysRole;
+import cn.mx.db.entity.sysrole.SysRole;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "sys_user")
-public class User implements Serializable {
+public class SysUser implements Serializable {
     private static final long serialVersionUID = -40356785423868312L;
 
     /**
